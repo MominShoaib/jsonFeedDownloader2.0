@@ -1,25 +1,16 @@
 package com.example.jsonfeeddownloader.activities
-import com.example.jsonfeeddownloader.model.GitHubUserModel
+
 import android.os.Bundle
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.example.jsonfeeddownloader.R
 import com.example.jsonfeeddownloader.adapter.CustomAdapter
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import com.example.jsonfeeddownloader.utitlities.showToast
 import com.example.jsonfeeddownloader.viewmodels.MainViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.reflect.Type
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,40 +24,10 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
         initViewModel()
+        getUserDataForFirstTime()
         observeUsersList()
         setListeners()
 
-
-
-        // Instantiate the RequestQueue.
-        val queue = Volley.newRequestQueue(this)
-      // parseJson(queue)
-
-
-
-    }
-
-    private fun parseJson(requestQueue: RequestQueue) {
-        val url = "https://api.github.com/users"
-
-        val stringRequest = StringRequest(
-            Request.Method.GET, url,
-            Response.Listener<String>
-            { success ->
-                val type: Type = object : TypeToken<ArrayList<GitHubUserModel?>?>() {}.type
-                val githubUser: ArrayList<GitHubUserModel> = Gson().fromJson(success, type)
-                setDataToRecyclerView(githubUser)
-                //showToast(githubUser.toString())
-
-            },
-
-            Response.ErrorListener
-            { error_ ->
-                showToast("Network Request Failed")
-            }
-        )
-
-        requestQueue.add(stringRequest)
 
     }
 
@@ -74,7 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         val customAdapter = CustomAdapter(githubUser, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        customAdapter.notifyDataSetChanged()
         recyclerView.adapter = customAdapter
+
 
     }
 
@@ -82,8 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         swipeRefresh.setOnRefreshListener()
         {
-
-            viewModel.getUsers(fetchingForFirstTime)
+            showToast("Getting users again after swipe to refresh")
+            viewModel.getUsers(false)
             fetchingForFirstTime = false
             swipeRefresh.isRefreshing = false
         }
@@ -95,26 +58,26 @@ class MainActivity : AppCompatActivity() {
     private fun initViewModel() {
 
 
-       viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
 
     }
 
     private fun observeUsersList() {
 
-        viewModel.getUsers(fetchingForFirstTime)
-        fetchingForFirstTime = false
+
         viewModel.userLiveData.observe(this, Observer {
             setDataToRecyclerView(it)
 
         })
 
 
-
     }
 
-
+    private fun getUserDataForFirstTime() {
+        viewModel.getUsers(fetchingForFirstTime)
+        fetchingForFirstTime = false
+    }
 
 
 }
