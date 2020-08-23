@@ -1,15 +1,18 @@
 package com.example.jsonfeeddownloader.activities
-import GitHubUserModel
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import android.os.Bundle
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.jsonfeeddownloader.R
 import com.example.jsonfeeddownloader.adapter.CustomAdapter
 import com.example.jsonfeeddownloader.utitlities.showToast
 import com.example.jsonfeeddownloader.viewmodels.MainViewModel
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         // Instantiate the RequestQueue.
         val queue = Volley.newRequestQueue(this)
-       // parseJson(queue)
+      // parseJson(queue)
 
 
 
@@ -90,16 +93,24 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initViewModel() {
-        viewModel =
-            ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(this.application))
-                .get(MainViewModel::class.java)
+
+
+       viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+
+
     }
 
     private fun observeUsersList() {
+
+        viewModel.getUsers(fetchingForFirstTime)
+        fetchingForFirstTime = false
         viewModel.userLiveData.observe(this, Observer {
             setDataToRecyclerView(it)
 
         })
+
+
 
     }
 

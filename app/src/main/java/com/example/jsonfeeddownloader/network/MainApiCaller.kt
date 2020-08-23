@@ -1,8 +1,9 @@
 package com.example.jsonfeeddownloader.network
 
-import GitHubUserModel
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import com.example.jsonfeeddownloader.listeners.ApiCallBackListener
 import retrofit2.Call
+import retrofit2.Response
 
 object MainApiCaller
 {
@@ -12,7 +13,9 @@ object MainApiCaller
         }
 
     fun getUsers(listener: ApiCallBackListener) {
-        val call: Call<GitHubUserModel> = ApiClient.apiClient.getUsers(1)               // code change from page to user model  page in sample code had array of users
+        val call: Call<List<GitHubUserModel>> = ApiClient.apiClient.getUsers()               // code change from page to user model  page in sample code had array of users
+
+
         call.enqueue(ApiHandler(USER_API_REQUEST_CODE, listener))
     }
 

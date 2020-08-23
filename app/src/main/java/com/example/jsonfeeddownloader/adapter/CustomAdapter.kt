@@ -1,6 +1,6 @@
 package com.example.jsonfeeddownloader.adapter
 
-import GitHubUserModel
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View

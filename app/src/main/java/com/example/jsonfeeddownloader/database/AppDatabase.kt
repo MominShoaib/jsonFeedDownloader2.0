@@ -1,6 +1,6 @@
 package com.example.jsonfeeddownloader.database
 
-import GitHubUserModel
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import androidx.room.Database
 import androidx.room.RoomDatabase
 

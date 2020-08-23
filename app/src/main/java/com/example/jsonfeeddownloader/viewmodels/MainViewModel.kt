@@ -1,8 +1,7 @@
 package com.example.jsonfeeddownloader.viewmodels
 
 
-import GitHubUserModel
-import com.example.jsonfeeddownloader.model.*
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData

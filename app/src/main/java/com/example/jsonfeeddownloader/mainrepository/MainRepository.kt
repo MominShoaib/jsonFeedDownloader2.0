@@ -1,6 +1,6 @@
 package com.example.jsonfeeddownloader.mainrepository
 
-import GitHubUserModel
+import com.example.jsonfeeddownloader.model.GitHubUserModel
 import android.content.Context
 import com.example.jsonfeeddownloader.database.DatabaseHandler
 import com.example.jsonfeeddownloader.listeners.ApiCallBackListener
@@ -53,9 +53,9 @@ private val listener: AppCommonDataListener
         DatabaseHandler.saveUsersData(users, this)
     }
     override fun onSuccess(requestCode: Int?, responseCode: Int?, data: Any?) {
-        val user = data as GitHubUserModel
-        //saveDataToDatabase(user)
-        //listener.onDataReceived(user)
+         val user = data as ArrayList<GitHubUserModel>
+        saveDataToDatabase(user)
+        listener.onDataReceived(user)
 
         // look into data handling as array list required but object present
     }
