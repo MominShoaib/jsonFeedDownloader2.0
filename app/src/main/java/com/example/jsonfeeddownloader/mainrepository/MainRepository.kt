@@ -2,6 +2,7 @@ package com.example.jsonfeeddownloader.mainrepository
 
 import com.example.jsonfeeddownloader.model.GitHubUserModel
 import android.content.Context
+import android.widget.Toast
 import com.example.jsonfeeddownloader.database.DatabaseHandler
 import com.example.jsonfeeddownloader.listeners.ApiCallBackListener
 import com.example.jsonfeeddownloader.listeners.AppCommonDataListener
@@ -27,8 +28,8 @@ private val listener: AppCommonDataListener
 // get users is public so that it can be called from view model
     fun getUsers(fetchForFirstTime: Boolean)
     {
-            if(fetchForFirstTime)
-            {
+            if(fetchForFirstTime) {
+
                 getDataFromNetwork()
             }
             else
@@ -57,7 +58,6 @@ private val listener: AppCommonDataListener
         saveDataToDatabase(user)
         listener.onDataReceived(user)
 
-        // look into data handling as array list required but object present
     }
 
     override fun onFailure(requestCode: Int?, message: String?) {

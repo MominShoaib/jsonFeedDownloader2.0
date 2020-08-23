@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         val customAdapter = CustomAdapter(githubUser, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        //is this needed or not ?
         customAdapter.notifyDataSetChanged()
         recyclerView.adapter = customAdapter
 
@@ -46,8 +47,7 @@ class MainActivity : AppCompatActivity() {
         swipeRefresh.setOnRefreshListener()
         {
             showToast("Getting users again after swipe to refresh")
-            viewModel.getUsers(false)
-            fetchingForFirstTime = false
+            viewModel.getUsers(fetchingForFirstTime)
             swipeRefresh.isRefreshing = false
         }
 

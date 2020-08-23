@@ -19,11 +19,11 @@ private lateinit var database: AppDatabase
     }
 
     fun saveUsersData(users: ArrayList<GitHubUserModel>, listener: DataBaseListener) {
-//        DatabaseOperationsTask(
-//            { saveUsers(users) },
-//            DatabaseOperations.WRITE,
-//            listener
-//        ).execute()
+        DatabaseOperationsTask(
+            { saveUsers(users) },
+            DatabaseOperations.WRITE,
+            listener
+        ).execute()
     }
 
     fun getUsersData(listener: DataBaseListener) {
