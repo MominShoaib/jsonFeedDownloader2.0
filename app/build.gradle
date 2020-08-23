@@ -76,6 +76,10 @@ android {
 
         //swipe refresh
         implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+        //stetho to view room db
+        implementation 'com.facebook.stetho:stetho:1.5.1'
+
     }
 
 

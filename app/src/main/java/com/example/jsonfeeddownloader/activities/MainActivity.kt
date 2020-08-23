@@ -10,6 +10,7 @@ import com.example.jsonfeeddownloader.adapter.CustomAdapter
 import com.example.jsonfeeddownloader.model.GitHubUserModel
 import com.example.jsonfeeddownloader.utitlities.showToast
 import com.example.jsonfeeddownloader.viewmodels.MainViewModel
+import com.facebook.stetho.Stetho
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Stetho.initializeWithDefaults(this)
+
 
         setContentView(R.layout.activity_main)
         initViewModel()
@@ -67,7 +70,11 @@ class MainActivity : AppCompatActivity() {
 
 
         viewModel.userLiveData.observe(this, Observer {
-            setDataToRecyclerView(it)
+
+
+            if (it != null) {
+                setDataToRecyclerView(it)
+            }
 
         })
 
